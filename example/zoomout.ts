@@ -17,9 +17,9 @@ async function main() {
   });
   await client.Connect();
   const Imagine = await client.Imagine("a cool cat, blue ears, yellow hat");
-  console.log(Imagine);
+  
   if (!Imagine) {
-    console.log("no message");
+    
     return;
   }
   const Upscale = await client.Upscale({
@@ -28,24 +28,24 @@ async function main() {
     hash: <string>Imagine.hash,
     flags: Imagine.flags,
     loading: (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     },
   });
   if (!Upscale) {
-    console.log("no message");
+    
     return;
   }
-  console.log(Upscale);
+  
   const Zoomout = await client.ZoomOut({
     level: "2x",
     msgId: <string>Upscale.id,
     hash: <string>Upscale.hash,
     flags: Upscale.flags,
     loading: (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     },
   });
-  console.log(Zoomout);
+  
 
   client.Close();
 }

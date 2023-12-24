@@ -18,27 +18,27 @@ async function main() {
   await client.Connect();
   client
     .Imagine("A little pink elephant", (uri) => {
-      console.log("loading123---", uri);
+      
     })
     .then(function (msg) {
-      console.log("msg123", msg);
+      
     });
 
   client
     .Imagine("A little pink dog", (uri) => {
-      console.log("loading234---", uri);
+      
     })
     .then(function (msg) {
-      console.log("msg234", msg);
+      
     });
 }
 main()
   .then(() => {
-    console.log("finished");
+    
     // process.exit(0);
   })
   .catch((err) => {
-    console.log("finished");
+    
     console.error(err);
     process.exit(1);
   });

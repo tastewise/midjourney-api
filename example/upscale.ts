@@ -15,9 +15,9 @@ async function main() {
     Debug: true,
   });
   const msg = await client.Imagine("a cool cat, blue ears, yellow hat");
-  console.log({ msg });
+  
   if (!msg) {
-    console.log("no message");
+    
     return;
   }
   const msg2 = await client.Upscale({
@@ -27,10 +27,10 @@ async function main() {
     flags: msg.flags,
     content: msg.content,
     loading: (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     },
   });
-  console.log({ msg2 });
+  
 }
 main().catch((err) => {
   console.error(err);

@@ -17,16 +17,16 @@ async function main() {
   });
   await client.Connect();
   const msg = await client.Info();
-  console.log({ msg });
+  
   client.Close();
 }
 main()
   .then(() => {
-    console.log("finished");
+    
     process.exit(0);
   })
   .catch((err) => {
-    console.log("finished");
+    
     console.error(err);
     process.exit(1);
   });

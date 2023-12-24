@@ -13,7 +13,7 @@ async function main() {
   if (message.length > 0) {
     console.error("banned words detected");
   }
-  console.log(message);
+  
 }
 main().catch((err) => {
   console.error(err);

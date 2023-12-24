@@ -9,7 +9,6 @@ export class faceSwap {
     const app = await client("https://felixrosberg-face-swap.hf.space/", {
       hf_token: this.hf_token as any,
     });
-    // console.log("app", app);
     const result: any = await app.predict(1, [
       Target, // blob in 'Target' Image component
       Source, // blob in 'Source' Image component
@@ -17,8 +16,6 @@ export class faceSwap {
       0, // number (numeric value between 0 and 100) in 'Adversarial defense ratio (%)' Slider component
       "Compare", // string[] (array of strings) in 'Mode' Checkboxgroup component
     ]);
-    // result.data;
     return result.data;
-    // console.log(result.data[0]);
   }
 }

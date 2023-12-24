@@ -21,12 +21,12 @@ async function main() {
   const Imagine = await client.Imagine(
     prompt,
     (uri: string, progress: string) => {
-      console.log("Imagine.loading", uri, "progress", progress);
+      
     }
   );
-  console.log(Imagine);
+  
   if (!Imagine) {
-    console.log("no message");
+    
     return;
   }
   const Variation = await client.Variation({
@@ -36,12 +36,12 @@ async function main() {
     flags: Imagine.flags,
     content: prompt,
     loading: (uri: string, progress: string) => {
-      console.log("Variation1.loading", uri, "progress", progress);
+      
     },
   });
-  console.log("Variation", Variation);
+  
   if (!Variation) {
-    console.log("no Variation");
+    
     return;
   }
 
@@ -52,49 +52,9 @@ async function main() {
     flags: Variation.flags,
     content: prompt,
     loading: (uri: string, progress: string) => {
-      console.log("Upscale.loading", uri, "progress", progress);
+      
     },
   });
-  console.log("Upscale", Upscale);
-  // client
-  //   .Variation({
-  //     index: 2,
-  //     msgId: <string>Imagine.id,
-  //     hash: <string>Imagine.hash,
-  //     flags: Imagine.flags,
-  //     loading: (uri: string, progress: string) => {
-  //       console.log("Variation2.loading", uri, "progress", progress);
-  //     },
-  //   })
-  //   .then((msg2) => {
-  //     console.log({ msg2 });
-  //   });
-  // client
-  //   .Variation({
-  //     index: 3,
-  //     msgId: <string>Imagine.id,
-  //     hash: <string>Imagine.hash,
-  //     flags: Imagine.flags,
-  //     loading: (uri: string, progress: string) => {
-  //       console.log("Variation3.loading", uri, "progress", progress);
-  //     },
-  //   })
-  //   .then((msg3) => {
-  //     console.log({ msg3 });
-  //   });
-  // client
-  //   .Variation({
-  //     index: 4,
-  //     msgId: <string>Imagine.id,
-  //     hash: <string>Imagine.hash,
-  //     flags: Imagine.flags,
-  //     loading: (uri: string, progress: string) => {
-  //       console.log("Variation4.loading", uri, "progress", progress);
-  //     },
-  //   })
-  //   .then((msg4) => {
-  //     console.log({ msg4 });
-  //   });
 }
 main().catch((err) => {
   console.error(err);

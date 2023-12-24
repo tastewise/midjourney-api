@@ -19,12 +19,12 @@ async function main() {
   const Imagine = await client.Imagine(
     "a cool cat, blue ears, yellow hat --v 4",
     (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     }
   );
-  console.log(Imagine);
+  
   if (!Imagine) {
-    console.log("no message");
+    
     return;
   }
   const Upscale = await client.Upscale({
@@ -33,10 +33,10 @@ async function main() {
     hash: <string>Imagine.hash,
     flags: Imagine.flags,
     loading: (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     },
   });
-  console.log(Upscale);
+  
   client.Close();
 }
 main().catch((err) => {

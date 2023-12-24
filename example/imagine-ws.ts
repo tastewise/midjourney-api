@@ -20,10 +20,10 @@ async function main() {
   const Imagine = await client.Imagine(
     "Red hamster smoking a cigaret --fast",
     (uri: string, progress: string) => {
-      console.log("Imagine.loading", uri, "progress", progress);
+      
     }
   );
-  console.log({ Imagine });
+  
   if (!Imagine) {
     return;
   }
@@ -32,10 +32,10 @@ async function main() {
     hash: <string>Imagine.hash,
     flags: Imagine.flags,
     loading: (uri: string, progress: string) => {
-      console.log("Reroll.loading", uri, "progress", progress);
+      
     },
   });
-  console.log({ reroll });
+  
 
   const Variation = await client.Variation({
     index: 2,
@@ -43,11 +43,11 @@ async function main() {
     hash: <string>Imagine.hash,
     flags: Imagine.flags,
     loading: (uri: string, progress: string) => {
-      console.log("Variation.loading", uri, "progress", progress);
+      
     },
   });
 
-  console.log({ Variation });
+  
   if (!Variation) {
     return;
   }
@@ -57,20 +57,20 @@ async function main() {
     hash: <string>Variation.hash,
     flags: Variation.flags,
     loading: (uri: string, progress: string) => {
-      console.log("Upscale.loading", uri, "progress", progress);
+      
     },
   });
-  console.log({ Upscale });
+  
 
   client.Close();
 }
 main()
   .then(() => {
-    // console.log("finished");
+    // 
     // process.exit(0);
   })
   .catch((err) => {
-    console.log("finished");
+    
     console.error(err);
     process.exit(1);
   });

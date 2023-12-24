@@ -20,14 +20,14 @@ async function main() {
   const Shorten = await client.Shorten(
     "Peeking out from the bushes, masterpiece, octane rendering, focus, realistic photography, colorful background, detailed, intricate details, rich colors, realistic style"
   );
-  console.log(Shorten);
+  
   if (!Shorten) {
-    console.log("no message");
+    
     return;
   }
   const prompt = Shorten.options.find((o) => o.label === `1️⃣`);
   if (!prompt) {
-    console.log("no prompt");
+    
     return;
   }
   await sleep(1400);
@@ -38,15 +38,15 @@ async function main() {
   //   content: Shorten.prompts[0],
   //   customId: prompt.custom,
   //   loading: (uri: string, progress: string) => {
-  //     console.log("loading", uri, "progress", progress);
+  //     
   //   },
   // });
-  // console.log("Custom Zoom", zoomout2x);
+  // 
 
   client.Close();
 }
 main().catch((err) => {
-  console.log("finished");
+  
   console.error(err);
   process.exit(1);
 });

@@ -21,9 +21,9 @@ async function main() {
   // cat`
   const prompt = `%s %sTiny cute isometric Hcia illustration, a girl with long white hair, smile, seawater, colorful bubbles, dreamy portrait, Teana punk, more details, fiber tracking, snail core, Kuvshinov Ilya, yakamoz emoji, soft lighting, soft colors, matte clay, blender 3d, pastel background  --v 5.1  --ar 1:1  --s 350  --q 1`;
   const msg = await client.Imagine(prompt, (uri: string, progress: string) => {
-    console.log("loading", uri, "progress", progress);
+    
   });
-  console.log({ msg });
+  
 }
 main().catch((err) => {
   console.error(err);

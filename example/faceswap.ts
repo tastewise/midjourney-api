@@ -20,11 +20,11 @@ async function main() {
     HuggingFaceToken: <string>process.env.HUGGINGFACE_TOKEN,
   });
   const info = await client.FaceSwap(target, source);
-  console.log(info?.uri);
+  
 }
 main()
   .then(() => {
-    console.log("finished");
+    
     process.exit(0);
   })
   .catch((err) => {

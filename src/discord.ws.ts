@@ -78,7 +78,7 @@ export class WsMessage {
     return new Promise((resolve) => {
       this.once("ready", (user) => {
         //print user nickname
-        console.log(`🎊 ws ready!!! Hi: ${user.global_name}`);
+        
         resolve(this);
       });
     });
@@ -310,7 +310,6 @@ export class WsMessage {
       this.log(data);
     }
     this.log("event", msg.t);
-    // console.log(data);
     switch (msg.t) {
       case "READY":
         this.emitSystem("ready", message.user);

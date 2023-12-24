@@ -21,12 +21,12 @@ async function main() {
   const Imagine = await client.Imagine(
     prompt,
     (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     }
   );
-  console.log(Imagine);
+  
   if (!Imagine) {
-    console.log("no message");
+    
     return;
   }
   const Upscale = await client.Upscale({
@@ -35,18 +35,18 @@ async function main() {
     hash: <string>Imagine.hash,
     flags: Imagine.flags,
     loading: (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     },
   });
   if (!Upscale) {
-    console.log("no message");
+    
     return;
   }
-  console.log(Upscale);
+  
 
   const vary = Upscale?.options?.find((o) => o.label === "Vary (Strong)");
   if (!vary) {
-    console.log("no zoomout");
+    
     return;
   }
   const varyCustom = await client.Custom({
@@ -55,15 +55,15 @@ async function main() {
     content: `${prompt} --zoom 2`,
     customId: vary.custom,
     loading: (uri: string, progress: string) => {
-      console.log("loading", uri, "progress", progress);
+      
     },
   });
-  console.log("vary (Strong)", varyCustom);
+  
   client.Close();
 }
 main()
   .then(() => {
-    console.log("done");
+    
   })
   .catch((err) => {
     console.error(err);
