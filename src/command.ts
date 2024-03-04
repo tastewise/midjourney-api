@@ -1,4 +1,5 @@
 import { DiscordImage, MJConfig } from "./interfaces";
+import async from "async";
 import { sleep } from "./utils";
 
 export const Commands = [
@@ -36,23 +37,18 @@ export class Command {
     if (this.cache[name] !== undefined) {
       return this.cache[name];
     }
-
-    // The new application-command-index API has a timeout of around 2-3 seconds before we can call it again,
-    // adding a delay of 4 seconds just to be safe.
-    await sleep(1000 * 4);
-
     if (this.config.ServerId) {
       const command = await this.getCommand(name);
       this.cache[name] = command;
       return command;
     }
-    await this.allCommand();
+    this.allCommand();
     return this.cache[name];
   }
   async allCommand() {
-    const url = `${this.config.DiscordBaseUrl}/api/v10/guilds/${this.config.ServerId}/application-command-index`;
+    const url = `${this.config.DiscordBaseUrl}/api/v9/guilds/${this.config.ServerId}/application-command-index`;
 
-    const response = await this.config.fetch(url, {
+    const response = await this.safeFetch(url, {
       headers: { authorization: this.config.SalaiToken },
     });
 
@@ -68,24 +64,51 @@ export class Command {
   }
 
   async getCommand(name: CommandName) {
-    const url = `${this.config.DiscordBaseUrl}/api/v10/guilds/${this.config.ServerId}/application-command-index`;
+    const url = `${this.config.DiscordBaseUrl}/api/v9/guilds/${this.config.ServerId}/application-command-index`;
 
-    const response = await this.config.fetch(url, {
+    const response = await this.safeFetch(url, {
       headers: { authorization: this.config.SalaiToken },
     });
     const data = await response.json();
-
-    const command = data?.application_commands?.find(
-      (application_command: { type: number; name: string }) =>
-        application_command.type === 1 && application_command.name === name
-    );
-
-    if (command) {
-      return command;
+    if (data?.application_commands?.[0]) {
+      return data.application_commands[0];
     }
-
     throw new Error(`Failed to get application_commands for command ${name}`);
   }
+
+  private safeFetch(input: RequestInfo | URL, init?: RequestInit | undefined) {
+    const request = this.config.fetch.bind(this, input, init);
+    return new Promise<Response>((resolve, reject) => {
+      this.fetchQueue.push(
+        {
+          request,
+          callback: (res: Response) => {
+            resolve(res);
+          },
+        },
+        (error: any, result: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+    });
+  }
+  private async processFetchRequest({
+    request,
+    callback,
+  }: {
+    request: () => Promise<Response>;
+    callback: (res: Response) => void;
+  }) {
+    const res = await request();
+    callback(res);
+    await sleep(1000 * 4);
+  }
+  private fetchQueue = async.queue(this.processFetchRequest, 1);
+
   async imaginePayload(prompt: string, nonce?: string) {
     const data = await this.commandData("imagine", [
       {
